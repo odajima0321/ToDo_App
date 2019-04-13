@@ -4,7 +4,7 @@ class TodosController < ApplicationController
   # GET /todos
   # GET /todos.json
   def index
-    @todos = Todo.all
+    @todos = Todo.all.where(is_done: 0)
   end
 
   # GET /todos/1
@@ -59,7 +59,13 @@ class TodosController < ApplicationController
       format.html { redirect_to todos_url, notice: 'Todo was successfully destroyed.' }
       format.json { head :no_content }
     end
+
+
+  def done
+    @todo = Todo.find(params[:id])
+    @todo.toggle!(:is_done)
   end
+end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -69,6 +75,6 @@ class TodosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def todo_params
-      params.require(:todo).permit(:name, :content, :end_date)
+      params.require(:todo).permit(:name, :content, :end_date, :is_done)
     end
 end
