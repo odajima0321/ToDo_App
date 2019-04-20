@@ -2,6 +2,13 @@
 
 <h1>Todos</h1>
 
+<%= link_to '完了済みタスクを見る', todos_path %>
+
+<%= form_with url: todos_path, method: :get, local: true do |f| %>
+   <%= text_field_tag "word", nil %>
+   <%= submit_tag "検索" %>
+<% end %>
+
 <table>
   <thead>
     <tr>
@@ -13,6 +20,7 @@
   </thead>
 
   <tbody>
+    <%= will_paginate @books, :previous_label => ' &lt 前へ', :next_label => '次へ >' %>
     <% @todos.each do |todo| %>
       <tr>
         <td><%= todo.name %></td>
